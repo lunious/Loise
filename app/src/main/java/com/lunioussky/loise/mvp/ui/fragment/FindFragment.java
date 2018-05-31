@@ -1,27 +1,57 @@
 package com.lunioussky.loise.mvp.ui.fragment;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
+
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.lunioussky.loise.R;
 import com.lunioussky.loise.di.component.DaggerFindComponent;
 import com.lunioussky.loise.di.module.FindModule;
 import com.lunioussky.loise.mvp.contract.FindContract;
+import com.lunioussky.loise.mvp.model.entity.GankEntity;
 import com.lunioussky.loise.mvp.presenter.FindPresenter;
-import com.lunioussky.loise.R;
+import com.lunioussky.loise.mvp.ui.adapter.FindAdapter;
+
+import java.util.List;
+
+import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import me.yuqirong.cardswipelayout.CardConfig;
+import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
+import me.yuqirong.cardswipelayout.CardLayoutManager;
+import me.yuqirong.cardswipelayout.OnSwipeListener;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
-public class FindFragment extends BaseFragment<FindPresenter> implements FindContract.View {
+public class FindFragment extends BaseFragment<FindPresenter> implements FindContract.View, SwipeRefreshLayout.OnRefreshListener {
+
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    SwipeRefreshLayout refreshLayout;
+
+    private FindAdapter findAdapter;
 
     public static FindFragment newInstance() {
         FindFragment fragment = new FindFragment();
@@ -45,8 +75,17 @@ public class FindFragment extends BaseFragment<FindPresenter> implements FindCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        refreshLayout.setOnRefreshListener(this);
+        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+        pagerSnapHelper.attachToRecyclerView(recyclerView);
+        findAdapter = new FindAdapter(null);
+        recyclerView.setAdapter(findAdapter);
+
+        //去服务器下载数据
+        mPresenter.requestData(true);
 
     }
+
 
     /**
      * 通过此方法可以使 Fragment 能够与外界做一些交互和通信, 比如说外部的 Activity 想让自己持有的某个 Fragment 对象执行一些方法,
@@ -91,12 +130,14 @@ public class FindFragment extends BaseFragment<FindPresenter> implements FindCon
 
     @Override
     public void showLoading() {
-
+        Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(integer -> refreshLayout.setRefreshing(true));
     }
 
     @Override
     public void hideLoading() {
-
+        refreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -114,5 +155,58 @@ public class FindFragment extends BaseFragment<FindPresenter> implements FindCon
     @Override
     public void killMyself() {
 
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.requestData(true);
+    }
+
+    @Override
+    public void startLoadMore() {
+        findAdapter.setEnableLoadMore(true);
+    }
+
+    @Override
+    public void endLoadMore() {
+        findAdapter.loadMoreComplete();
+    }
+
+    @Override
+    public void setNewData(List<GankEntity.ResultsBean> mData) {
+        CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback(recyclerView.getAdapter(), mData);
+        cardCallback.setOnSwipedListener(new OnSwipeListener() {
+            @Override
+            public void onSwiping(RecyclerView.ViewHolder viewHolder, float ratio, int direction) {
+
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, Object o, int direction) {
+                mPresenter.requestData(false);
+                if (direction == CardConfig.SWIPED_RIGHT) {
+
+                }
+            }
+
+            @Override
+            public void onSwipedClear() {
+
+            }
+        });
+        final ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback);
+        final CardLayoutManager cardLayoutManager = new CardLayoutManager(recyclerView, touchHelper);
+        recyclerView.setLayoutManager(cardLayoutManager);
+        touchHelper.attachToRecyclerView(recyclerView);
+
+        findAdapter.setNewData(mData);
+        if (findAdapter.getData().size() < 2) {
+            mPresenter.requestData(false);
+        }
+    }
+
+    @Override
+    public void setAddData(List<GankEntity.ResultsBean> results) {
+        findAdapter.addData(results);
     }
 }

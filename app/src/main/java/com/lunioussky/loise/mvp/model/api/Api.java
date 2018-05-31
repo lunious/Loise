@@ -10,5 +10,6 @@ package com.lunioussky.loise.mvp.model.api;
  * ================================================
  */
 public interface Api {
-    String APP_DOMAIN = "https://api.github.com";
+    String APP_DOMAIN = "http://gank.io/";
+    String RequestSuccess = "0";
 }

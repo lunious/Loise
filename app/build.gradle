@@ -48,6 +48,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //组件化框架arms
     implementation rootProject.ext.dependencies["arms"]
+    //support
+    implementation rootProject.ext.dependencies["cardview-v7"]
     //view
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     //tools
@@ -63,6 +65,10 @@ dependencies {
     implementation rootProject.ext.dependencies["immersionBar"]
     //circleimageview
     implementation rootProject.ext.dependencies["circleimageview"]
+    //BaseRecyclerViewAdapterHelper
+    implementation rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
+    //cardswipelayout
+    implementation rootProject.ext.dependencies["cardswipelayout"]
 
 
 }
