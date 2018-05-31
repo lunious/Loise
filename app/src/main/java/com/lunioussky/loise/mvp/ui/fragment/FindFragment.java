@@ -1,7 +1,5 @@
 package com.lunioussky.loise.mvp.ui.fragment;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -12,13 +10,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.TextView;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
@@ -34,8 +28,6 @@ import com.lunioussky.loise.mvp.ui.adapter.FindAdapter;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import me.yuqirong.cardswipelayout.CardConfig;
 import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
 import me.yuqirong.cardswipelayout.CardLayoutManager;
@@ -48,8 +40,6 @@ public class FindFragment extends BaseFragment<FindPresenter> implements FindCon
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.refreshLayout)
-    SwipeRefreshLayout refreshLayout;
 
     private FindAdapter findAdapter;
 
@@ -75,7 +65,6 @@ public class FindFragment extends BaseFragment<FindPresenter> implements FindCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        refreshLayout.setOnRefreshListener(this);
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(recyclerView);
         findAdapter = new FindAdapter(null);
@@ -130,14 +119,11 @@ public class FindFragment extends BaseFragment<FindPresenter> implements FindCon
 
     @Override
     public void showLoading() {
-        Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> refreshLayout.setRefreshing(true));
+
     }
 
     @Override
     public void hideLoading() {
-        refreshLayout.setRefreshing(false);
     }
 
     @Override
