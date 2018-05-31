@@ -13,5 +13,4 @@ import org.simple.eventbus.EventBus;
  * ================================================
  */
 public interface EventBusTags {
-    String ACTIVITY_FRAGMENT_REPLACE = "ActivityFragmentReplace";
 }

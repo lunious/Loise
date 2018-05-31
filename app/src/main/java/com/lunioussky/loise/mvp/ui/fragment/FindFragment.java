@@ -9,41 +9,38 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-
-import com.lunioussky.loise.di.component.DaggerMineComponent;
-import com.lunioussky.loise.di.module.MineModule;
-import com.lunioussky.loise.mvp.contract.MineContract;
-import com.lunioussky.loise.mvp.presenter.MinePresenter;
-
+import com.lunioussky.loise.di.component.DaggerFindComponent;
+import com.lunioussky.loise.di.module.FindModule;
+import com.lunioussky.loise.mvp.contract.FindContract;
+import com.lunioussky.loise.mvp.presenter.FindPresenter;
 import com.lunioussky.loise.R;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
-public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View {
+public class FindFragment extends BaseFragment<FindPresenter> implements FindContract.View {
 
-    public static MineFragment newInstance() {
-        MineFragment fragment = new MineFragment();
+    public static FindFragment newInstance() {
+        FindFragment fragment = new FindFragment();
         return fragment;
     }
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-        DaggerMineComponent //如找不到该类,请编译一下项目
+        DaggerFindComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(appComponent)
-                .mineModule(new MineModule(this))
+                .findModule(new FindModule(this))
                 .build()
                 .inject(this);
     }
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mine, container, false);
+        return inflater.inflate(R.layout.fragment_find, container, false);
     }
 
     @Override

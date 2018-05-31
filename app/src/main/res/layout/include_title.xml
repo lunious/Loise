@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="120px"
+    android:layout_height="@dimen/d40"
     android:background="?attr/colorPrimary"
-    app:contentInsetStart="0dp">
+    app:contentInsetStart="@dimen/d0">
 
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/toolbar_back"
@@ -18,8 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="30px"
-            android:layout_marginRight="30px"
+            android:layout_marginEnd="@dimen/p30"
+            android:layout_marginStart="@dimen/p30"
             android:src="@drawable/ic_arrow_back_white_24dp" />
 
     </com.zhy.autolayout.AutoRelativeLayout>
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="@dimen/s18"
         tools:text="@string/app_name" />
 
 
