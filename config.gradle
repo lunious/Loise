@@ -112,6 +112,8 @@ ext {
             "bottomBar"                : "com.roughike:bottom-bar:2.3.1",
             //ImmersionBar
             "immersionBar"             : "com.gyf.barlibrary:barlibrary:2.3.0",
+            //circleimageview
+            "circleimageview"          : "de.hdodenhof:circleimageview:2.2.0",
     ]
 
 

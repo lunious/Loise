@@ -57,11 +57,12 @@ dependencies {
     releaseImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["junit"]
-
     //BottomBar
     implementation rootProject.ext.dependencies["bottomBar"]
     //ImmersionBar
     implementation rootProject.ext.dependencies["immersionBar"]
+    //circleimageview
+    implementation rootProject.ext.dependencies["circleimageview"]
 
 
 }
