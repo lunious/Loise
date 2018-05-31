@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
 
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/mainTab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="啥也还没有"
-        android:textColor="@color/red"
-        android:textSize="@dimen/s26"
-        android:gravity="center"/>
+        android:layout_height="@dimen/d42"
+        app:tabBackground="@null"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="@dimen/d0"
+        app:tabMaxWidth="@dimen/d200"
+        app:tabMinWidth="@dimen/d20"
+        app:tabMode="scrollable"
+        app:tabPaddingEnd="@dimen/d8"
+        app:tabPaddingStart="@dimen/d12" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/p1"
+        android:background="@color/lightGrey" />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mainViewPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </com.zhy.autolayout.AutoLinearLayout>
