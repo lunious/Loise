@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/include_title" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/colorPrimary" />
 
     <FrameLayout
         android:id="@+id/main_frame"
@@ -16,8 +19,8 @@
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d50"
-        android:layout_gravity="bottom"
+        android:layout_height="@dimen/d54"
+        android:layout_alignParentBottom="true"
         app:bb_tabXmlResource="@xml/bottombar_tabs" />
 
 </com.zhy.autolayout.AutoLinearLayout>

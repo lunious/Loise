@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-    
+
     useLibrary 'org.apache.http.legacy'
 
     compileOptions {
@@ -46,7 +46,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'me.jessyan:arms:2.4.1'
+    //组件化框架arms
+    implementation rootProject.ext.dependencies["arms"]
     //view
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     //tools
@@ -57,7 +58,10 @@ dependencies {
     testImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["junit"]
 
-    implementation 'com.roughike:bottom-bar:2.3.1' //底部导航
+    //BottomBar
+    implementation rootProject.ext.dependencies["bottomBar"]
+    //ImmersionBar
+    implementation rootProject.ext.dependencies["immersionBar"]
 
 
 }

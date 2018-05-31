@@ -2,16 +2,16 @@
 <tabs>
     <tab
         id="@+id/tab_home"
-        icon="@mipmap/ic_friends"
+        icon="@mipmap/ic_index"
         title="@string/title_home" />
 
     <tab
         id="@+id/tab_discover"
-        icon="@mipmap/ic_friends"
+        icon="@mipmap/ic_find"
         title="@string/title_discover" />
     <tab
         id="@+id/tab_mine"
-        icon="@mipmap/ic_friends"
+        icon="@mipmap/ic_mine"
         title="@string/title_mine" />
 
 </tabs>

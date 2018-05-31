@@ -301,3 +301,6 @@
 -keep public class com.alibaba.android.arouter.routes.**{*;}
 -keep class * implements com.alibaba.android.a
 
+################ImmersionBar#################
+-keep class com.gyf.barlibrary.* {*;}
+

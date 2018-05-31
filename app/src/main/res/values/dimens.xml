@@ -1,5 +1,7 @@
 <resources>
 
+    <dimen name="status_bar_height">0dp</dimen>
+
     <!--单位为dp-->
     <dimen name="d0">0dp</dimen>
     <dimen name="d1">1.0dp</dimen>

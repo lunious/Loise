@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.widget.FrameLayout;
-
+import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -22,13 +21,13 @@ import com.lunioussky.loise.mvp.ui.fragment.IndexFragment;
 import com.lunioussky.loise.mvp.ui.fragment.MineFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
-import com.zhy.autolayout.AutoRelativeLayout;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -39,11 +38,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     FrameLayout mainFrame;
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
-    @BindView(R.id.toolbar_back)
-    AutoRelativeLayout toolbarBack;
 
     private List<Fragment> mFragments;
     private int mReplace = 0;
+    private ImmersionBar mImmersionBar;
 
 
     private OnTabSelectListener onTabSelectListener = new OnTabSelectListener() {
@@ -65,6 +63,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     };
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //初始化，默认透明状态栏和黑色导航栏
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();  //必须调用该方法，防止内存泄漏，不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
+
+    }
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -83,7 +96,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        toolbarBack.setVisibility(View.INVISIBLE);
+
         IndexFragment indexFragment;
         FindFragment findFragment;
         MineFragment mineFragment;

@@ -1,1 +1,1 @@
-include ':loise', ':app', ':app'
+include ':app'
